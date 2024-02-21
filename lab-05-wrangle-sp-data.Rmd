@@ -146,7 +146,8 @@ dn_lq_ak
 ```
 
 4.  How many observations are in the joined `dn_lq_ak` data frame? What are the names of the variables in this data frame.
-- *There are `r nrow(dn_lq_ak)` observations in the `dn_lq_ak` dataframe. The variable names are `address.x`, `city.x`, `state`, `zip.x`, `longitude.x`, `address.y`, `city.y`, `zip.y`, `longitude.y`, and `latitude.y`.*
+
+- *There are `r nrow(dn_lq_ak)` observations in the `dn_lq_ak` dataframe. The names of the variables in this dataframe are `r names(dn_lq_ak)`.*
 
 `.x` in the variable names means the variable comes from the `x` data frame (the first argument in the `full_join` call, i.e. `dn_ak`), and `.y` means the variable comes from the `y` data frame.
 These varibles are renamed to include `.x` and `.y` because the two data frames have the same variables and it's not possible to have two variables in a data frame with the exact same name.
