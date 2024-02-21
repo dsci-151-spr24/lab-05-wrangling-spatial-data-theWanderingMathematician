@@ -215,17 +215,79 @@ dn_lq_ak_mindist %>%
 dn_lq_ak_mindist %>%
   summarise(min = min(closest), mean = mean(closest), max = max(closest))
 ```
-- *The minimum distance between a Denny's and a La Quinta in Alaska is `r min(dn_lq_ak_mindist$closest)`, while the average distance from a Denny's location to the closest La Quinta is `r mean(dn_lq_ak_mindist$closest)`. The middle value is much closer to the higher value than to the lower one.*
+- *The minimum distance between a Denny's and a La Quinta in Alaska is `r min(dn_lq_ak_mindist$closest)` kilometers, while the average distance from a Denny's location to the closest La Quinta is `r mean(dn_lq_ak_mindist$closest)`km. The middle value is much closer to the higher value than to the lower one.*
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
 9.  Repeat the same analysis for North Carolina: (i) filter Denny's and La Quinta Data Frames for NC, (ii) join these data frames to get a completelist of all possible pairings, (iii) calculate the distances between all possible pairings of Denny's and La Quinta in NC, (iv) find the minimum distance between each Denny's and La Quinta location, (v) visualize and describe the distribution of these shortest distances using appropriate summary statistics.
 
+```{r}
+dn_lq_nc_dist <- dennys %>%
+  filter(state == "NC") %>%
+  full_join(filter(laquinta, state == "NC"), by = "state") %>%
+  mutate(distance = haversine(longitude.x, latitude.x, longitude.y, latitude.y, round = 3))
+
+dn_lq_nc_mindist <- dn_lq_nc_dist %>%
+  group_by(address.x) %>%
+  summarise(closest = min(distance))
+
+dn_lq_nc_mindist %>%
+  ggplot(aes(x = closest)) +
+  geom_histogram()
+
+dn_lq_nc_mindist %>%
+  summarise(min = min(closest), mean = mean(closest), max = max(closest))
+```
+
+- *The minimum distance between a Denny's and a La Quinta in North Carolina is `r min(dn_lq_nc_mindist$closest)`km, while the highest is `r max(dn_lq_nc_mindist$closest)`km. In addition to this, the average distance from a Denny's location to the closest La Quinta is `r mean(dn_lq_nc_mindist$closest)` kilometers.*
+
 10. Repeat the same analysis for Texas.
+
+```{r}
+dn_lq_tx_dist <- dennys %>%
+  filter(state == "TX") %>%
+  full_join(filter(laquinta, state == "TX"), by = "state") %>%
+  mutate(distance = haversine(longitude.x, latitude.x, longitude.y, latitude.y, round = 3))
+
+dn_lq_tx_mindist <- dn_lq_tx_dist %>%
+  group_by(address.x) %>%
+  summarise(closest = min(distance))
+
+dn_lq_tx_mindist %>%
+  ggplot(aes(x = closest)) +
+  geom_histogram()
+
+dn_lq_tx_mindist %>%
+  summarise(min = min(closest), mean = mean(closest), max = max(closest))
+```
+
+- *The minimum distance between a Denny's and a La Quinta in Texas is `r min(dn_lq_tx_mindist$closest)` kilometers, while the highest is `r max(dn_lq_tx_mindist$closest)`km. In addition to this, the average distance from a Denny's location to the closest La Quinta is `r mean(dn_lq_tx_mindist$closest)`km.*
 
 11. Repeat the same analysis for a state of your choosing, different than the ones we covered so far.
 
+```{r}
+dn_lq_ny_dist <- dennys %>%
+  filter(state == "NY") %>%
+  full_join(filter(laquinta, state == "NY"), by = "state") %>%
+  mutate(distance = haversine(longitude.x, latitude.x, longitude.y, latitude.y, round = 3))
+
+dn_lq_ny_mindist <- dn_lq_ny_dist %>%
+  group_by(address.x) %>%
+  summarise(closest = min(distance))
+
+dn_lq_ny_mindist %>%
+  ggplot(aes(x = closest)) +
+  geom_histogram()
+
+dn_lq_ny_mindist %>%
+  summarise(min = min(closest), mean = mean(closest), max = max(closest))
+```
+
+- *The minimum distance between a Denny's and a La Quinta in New York is `r min(dn_lq_ny_mindist$closest)`kilometers, while the highest is `r max(dn_lq_ny_mindist$closest)`km. In addition to this, the average distance from a Denny's location to the closest La Quinta is `r mean(dn_lq_ny_mindist$closest)`km.*
+
 12. Among the states you examined, where is Mitch Hedberg's joke most likely to hold true?
     Explain your reasoning.
+
+- *Examining statistics, even though the mean is lowest in Alaska, this seems mostly to be due to the low number of locations; it seems like it would be more likely to actually find a Denny's and a La Quinta right next to eachother in Texas, since there are over 55 Denny's locations within 2km of the nearest La Quinta, and the overall distribution's likelihood of being in the range decreases (seemingly exponentially) with distance, while in New York the distribution is more spread-out and randomised, and in North Carolina, it peaks at around 40km separation.*
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
