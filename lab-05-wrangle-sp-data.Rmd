@@ -209,8 +209,13 @@ dn_lq_ak_mindist <- dn_lq_ak %>%
 
 ```{r}
 dn_lq_ak_mindist %>%
+  ggplot(aes(x = closest)) +
+  geom_histogram()
+
+dn_lq_ak_mindist %>%
   summarise(min = min(closest), mean = mean(closest), max = max(closest))
 ```
+- *The minimum distance between a Denny's and a La Quinta in Alaska is `r min(dn_lq_ak_mindist$closest)`, while the average distance from a Denny's location to the closest La Quinta is `r mean(dn_lq_ak_mindist$closest)`. The middle value is much closer to the higher value than to the lower one.*
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
